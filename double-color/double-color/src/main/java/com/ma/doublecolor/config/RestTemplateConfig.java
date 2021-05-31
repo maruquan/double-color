@@ -40,10 +40,10 @@ import javax.annotation.Resource;
 @Configuration
 public class RestTemplateConfig {
 
-    @Resource
+//    @Resource
     private FastJsonHttpMessageConverter httpMessageConverter;
 
-    @Bean
+//    @Bean
     RestTemplate restTemplate() throws Exception {
         HttpComponentsClientHttpRequestFactory factory = new
                 HttpComponentsClientHttpRequestFactory();
