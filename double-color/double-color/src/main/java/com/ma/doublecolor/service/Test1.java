@@ -5,10 +5,14 @@ import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.conn.ssl.TrustSelfSignedStrategy;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties;
+import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import javax.annotation.Resource;
 import javax.net.ssl.SSLContext;
 import java.io.BufferedReader;
 
@@ -19,39 +23,19 @@ import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 
+@Service
 public class Test1 {
 
+    @Resource
+    private RestTemplate restTemplate;
 
-    public static void main(String[] args) {
-// TODO Auto-generated method stub
 
-        try {
-            URL url = new URL("https://cp.360.cn/shdd/ssq?agent=700007");
 
-            BufferedReader br = new BufferedReader(new InputStreamReader(url.openStream()));
+    public void getUrl(){
 
-            String s = null;
-
-            StringBuffer sb = new StringBuffer();
-
-            while ((s = br.readLine()) != null)
-
-            {
-                sb.append(s + "/r/n");
-
-            }
-
-            System.out.println(sb.toString());
-
-            br.close();
-
-        } catch (Exception e) {
-// TODO Auto-generated catch block
-
-            e.printStackTrace();
-
-        }
-
+        ResponseEntity<String> res = restTemplate.getForEntity("https://cp.360.cn/shdd/ssq?agent=700007",String.class);
+        String body = res.getBody();
+        System.err.println(body);
     }
 
     private static RestTemplate restTemplate() throws KeyManagementException, NoSuchAlgorithmException, KeyStoreException {
