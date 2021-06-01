@@ -1,5 +1,6 @@
 package com.ma.doublecolor.service;
 
+import com.ma.doublecolor.utils.DataFileUtils;
 import org.apache.commons.httpclient.DefaultHttpMethodRetryHandler;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpMethod;
@@ -32,6 +33,12 @@ public class HttpUtils {
 
     private static final Logger logger = LoggerFactory.getLogger(HttpUtils.class);
 
+    private static String dataBody;
+
+    public static String getDataBody(){
+        return dataBody;
+    }
+
     /**
      * 执行一个HTTP GET请求，返回请求响应的HTML
      *
@@ -39,15 +46,12 @@ public class HttpUtils {
      * @return 返回请求响应的HTML
      */
     public static int doGet(String url) {
+//        System.setProperty("https.protocols", "TLSv1,TLSv1.1,TLSv1.2,SSLv3");
         HttpClient client = new HttpClient();
         HttpMethod method = new GetMethod(url);
         try {
-
-
              client.executeMethod(method);
-
-            System.out.println("内容："+ method.getResponseBodyAsString());
-
+            dataBody = DataFileUtils.AnlnyData(method.getResponseBodyAsString());
         } catch (URIException e) {
             logger.error("执行HTTP Get请求时，发生异常！", e);
             return HttpStatus.SC_BAD_REQUEST;
