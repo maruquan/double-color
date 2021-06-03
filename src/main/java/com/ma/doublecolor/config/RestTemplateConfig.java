@@ -49,5 +49,4 @@ public class RestTemplateConfig {
         factory.setHttpClient(httpClient);
         return factory;
     }
-
 }
